@@ -27,3 +27,9 @@ Before running the tests make sure you are serving the app via `ng serve`.
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+##Sources:
+
+https://github.com/angular/angular-cli
+https://javascriptrocks.wordpress.com/2016/06/04/express-with-angular-cli-in-5-minutes/#comment-11
+https://github.com/tonysneed/Demo.Express.Angular-CLI
