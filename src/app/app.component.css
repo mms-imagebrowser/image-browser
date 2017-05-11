@@ -1,0 +1,32 @@
+#container {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  min-height: 100%;
+  min-width: 100%;
+}
+
+#left-col {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  height: 100%;
+}
+
+#file-browser {
+  display: flex;
+  resize: vertical;
+  border: 1px solid;
+  padding: 10px;
+  overflow: auto;
+}
+
+#preview {
+}
+
+#files {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 100%;
+}
