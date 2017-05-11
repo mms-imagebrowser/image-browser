@@ -1,13 +1,25 @@
 import {async, TestBed} from '@angular/core/testing';
 
 import {AppComponent} from './app.component';
+import {FileBrowserComponent} from './file-browser/file-browser.component';
+import {PreviewComponent} from './preview/preview.component';
+import {ImgSelectionComponent} from './img-selection/img-selection.component';
+import {PluginComponent} from './plugin/plugin.component';
+import {PluginSelectorComponent} from './plugin/plugin-selector/plugin-selector.component';
+import {PluginSettingsComponent} from './plugin/plugin-settings/plugin-settings.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
-      ],
+        AppComponent,
+        FileBrowserComponent,
+        PreviewComponent,
+        ImgSelectionComponent,
+        PluginComponent,
+        PluginSelectorComponent,
+        PluginSettingsComponent
+      ]
     }).compileComponents();
   }));
 
@@ -17,16 +29,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it(`should have as title 'app works!'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app works!');
-  }));
-
-  it('should render title in a h1 tag', async(() => {
+  it('should render div with class row', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('app works!');
+    expect(compiled.querySelector('div').className).toContain('row');
   }));
 });

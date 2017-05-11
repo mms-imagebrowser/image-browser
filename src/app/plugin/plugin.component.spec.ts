@@ -1,6 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PluginComponent } from './plugin.component';
+import {PluginComponent} from './plugin.component';
+import {PluginSelectorComponent} from './plugin-selector/plugin-selector.component';
+import {PluginSettingsComponent} from './plugin-settings/plugin-settings.component';
 
 describe('PluginComponent', () => {
   let component: PluginComponent;
@@ -8,9 +10,9 @@ describe('PluginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PluginComponent ]
+      declarations: [PluginComponent, PluginSelectorComponent, PluginSettingsComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
