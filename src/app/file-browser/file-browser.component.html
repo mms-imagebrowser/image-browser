@@ -1,3 +1,4 @@
-<tree-root [nodes]="fileTree"
+<tree-root #tree id="tree" [nodes]="getFileTree()"
+
            (onFocus)="onEvent($event)">
 </tree-root>

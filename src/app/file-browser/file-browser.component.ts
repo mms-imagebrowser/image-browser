@@ -1,4 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FileSystemService} from '../files-system-service';
+import {TreeComponent} from 'angular-tree-component';
+import 'rxjs/Rx';
 
 @Component({
   selector: 'app-file-browser',
@@ -7,39 +10,67 @@ import {Component, OnInit} from '@angular/core';
 })
 export class FileBrowserComponent implements OnInit {
 
-  fileTree = [
-    {
-      id: 1,
-      name: 'root1',
-      children: [
-        {id: 2, name: 'child1'},
-        {id: 3, name: 'child2'}
-      ]
-    },
-    {
-      id: 4,
-      name: 'root2',
-      children: [
-        {id: 5, name: 'child2.1'},
-        {
-          id: 6,
-          name: 'child2.2',
-          children: [
-            {id: 7, name: 'subsub'}
-          ]
-        }
-      ]
-    }
-  ];
+  @ViewChild(TreeComponent)
+  private tree: TreeComponent;
+
+  private fileTree: FileTreeNode[] = [new FileTreeNode(1, 'src', './src')];
+  private index = 1;
 
   onEvent(event: any) {
     console.log(event);
   }
 
-  constructor() {
+  constructor(private fileService: FileSystemService) {
   }
 
   ngOnInit() {
+    this.fileService.getFileList('./src').subscribe(response => {
+      console.log(response);
+      response.children.forEach(value => {
+        console.log('starting conversion ' + value);
+        if (value.path !== './src') {
+          this.index++;
+          this.addTreeNode(this.fileTree[0], value);
+
+        }
+      });
+      console.log(JSON.stringify(this.fileTree));
+      this.tree.treeModel.update();
+    });
   }
 
+  getFileTree() {
+    return this.fileTree;
+  }
+
+  addTreeNode(parent: FileTreeNode, element: any): FileTreeNode {
+    const treeNode = new FileTreeNode(this.index, element.name, element.path);
+    parent.addChildren(treeNode);
+    // parent.children.push(treeNode);
+    if (!!element.children) {
+      element.children.forEach(child => {
+        this.index++;
+        this.addTreeNode(treeNode, child);
+      });
+    }
+    return treeNode;
+  }
+
+}
+
+class FileTreeNode {
+  private id: number;
+  private name: string;
+  private path: string;
+  private children: FileTreeNode[] = [];
+
+  constructor(id: number, name: string, path: string) {
+    this.id = id;
+    this.name = name;
+    this.path = path;
+  }
+
+  public addChildren(children: FileTreeNode) {
+    this.children.push(children);
+  }
 }

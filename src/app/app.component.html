@@ -1,20 +1,16 @@
-<div class="container"
-     fxLayout="row"
-     fxLayoutAlign="center center"
-     fxLayoutGap="10px"
-     fxLayoutGap.xs="0">
-  <div class="container" fxLayout="column" fxFlex="25%">
-    <div fxFlex="50%" fxFlexOrder="1">
+<div id="container">
+  <div id="left-col">
+    <div id="file-browser">
       <app-file-browser></app-file-browser>
     </div>
-    <div fxFlex="50%" fxFlexOrder="2">
+    <div id="preview">
       <app-preview></app-preview>
     </div>
   </div>
-  <div fxFlex="50%">
+  <div id="files">
     <app-img-selection></app-img-selection>
   </div>
-  <div fxFlex="25%">
+  <div id="plugin">
     <app-plugin></app-plugin>
   </div>
 </div>
