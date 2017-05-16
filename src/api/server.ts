@@ -2,6 +2,7 @@ import * as express from 'express';
 import {Request, Response} from 'express';
 import {PluginService} from './plugin-service';
 import * as bodyParser from 'body-parser';
+import {FileService} from './file-service';
 
 namespace express_api {
   const path = './plugins'; // TODO: external config
@@ -9,6 +10,7 @@ namespace express_api {
   const app = express();
   const port = 3000;
   const pluginService = new PluginService(path);
+  const fileSystemService = new FileService();
 
   // Plug in body parser middleware for posting JSON
   app.use(bodyParser.json());
@@ -52,6 +54,14 @@ namespace express_api {
     pluginService.delete(req.params.name, success => {
       resp.status(success ? 200 : 500);
       resp.send('');
+    });
+  });
+
+  app.get('/api/filesystem/list/', (req: Request, resp: Response) => {
+    fileSystemService.list(req.query.path, files => {
+      if (files) {
+        resp.send(files);
+      }
     });
   });
   // Start the web app

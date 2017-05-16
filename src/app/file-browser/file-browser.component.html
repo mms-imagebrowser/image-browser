@@ -1,3 +1,4 @@
-<p>
-  file-browser works!
-</p>
+<tree-root #tree id="tree" [nodes]="getFileTree()"
+
+           (onFocus)="onEvent($event)">
+</tree-root>
