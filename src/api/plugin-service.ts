@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import {Plugin} from './plugin';
-import * as PythonShell from 'Python-Shell';
+import * as PythonShell from 'python-shell';
 
 export class PluginService {
   private readonly _path: string;
