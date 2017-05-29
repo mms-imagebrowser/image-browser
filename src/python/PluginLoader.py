@@ -10,4 +10,4 @@ if action != "info" and action != "execute":
 with open("plugins/" + options["pluginName"] + ".py", "rb") as source_file:
   source = source_file.read()
   exec (source, globals(), locals())
-  globals()[action](options)
+  print(globals()[action](options))
