@@ -77,13 +77,11 @@ export class PluginService {
     return this._path + '/' + name + '.py';
   }
 
-  execute(name: string, action: string, options: JSON, imagePath: string, callback: (newPath?: string) => void) {
-    if (imagePath && imagePath.charAt(0) !== '/') {
-      imagePath = '../' + imagePath; // TODO: transform path or not transform path
-    }
+  execute(name: string, action: string, options: JSON, imagePath: string, callback: (result?: JSON) => void) {
     options['imagePath'] = imagePath;
     options['pluginName'] = name;
     options['action'] = action;
+    console.log(`Applying plugin "${name}" with action "${action}" to ${imagePath}`);
     const pyOptions = {
       mode: 'json',
       args: [JSON.stringify(options)],
@@ -92,6 +90,7 @@ export class PluginService {
     PythonShell.run('../src/python/PluginLoader.py', pyOptions, (err, results) => {
       if (err) {
         console.error(err);
+        callback(null);
       }
       callback(results);
     });

@@ -59,8 +59,14 @@ namespace express_api {
 
   app.post('/api/plugins/:name/execute', (req: Request, resp: Response) => {
     console.log('Executing plugin ' + req.params.name);
-    pluginService.execute(req.params.name, req.query.action, req.body, req.query.imgPath, newPath => {
-      resp.send(newPath);
+    pluginService.execute(req.params.name, req.query.action, req.body, req.query.imgPath, result => {
+      if (!result) {
+        resp.status(500);
+        resp.send();
+        console.log('Plugin execution failed');
+      } else {
+        resp.send(result);
+      }
     });
   });
 
