@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import {Plugin} from './plugin';
+import * as PythonShell from 'Python-Shell';
 
 export class PluginService {
   private readonly _path: string;
@@ -74,5 +75,25 @@ export class PluginService {
 
   private createPathFromName(name: string) {
     return this._path + '/' + name + '.py';
+  }
+
+  execute(name: string, action: string, options: JSON, imagePath: string, callback: (newPath?: string) => void) {
+    if (imagePath && imagePath.charAt(0) !== '/') {
+      imagePath = '../' + imagePath; // TODO: transform path or not transform path
+    }
+    options['imagePath'] = imagePath;
+    options['pluginName'] = name;
+    options['action'] = action;
+    const pyOptions = {
+      mode: 'json',
+      args: [JSON.stringify(options)],
+      scriptPath: './plugins/'
+    };
+    PythonShell.run('../src/python/PluginLoader.py', pyOptions, (err, results) => {
+      if (err) {
+        console.error(err);
+      }
+      callback(results);
+    });
   }
 }

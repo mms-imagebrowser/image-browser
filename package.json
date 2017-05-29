@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "ng serve --proxy-config proxy.conf.json",
-    "serve-api": "DEBUG=express:* gulp serve-api",
+    "serve-api": "gulp serve-api",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
     "pree2e": "webdriver-manager update",
