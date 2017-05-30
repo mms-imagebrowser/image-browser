@@ -34,6 +34,11 @@ Before running the tests make sure you are serving the app via `ng serve`.
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
+## Plugins
+
+The demo BlackWhite and Brightness plugins require Pillow.
+Install with `pip install Pillow`
+
 ## Sources:
 
 https://github.com/angular/angular-cli
