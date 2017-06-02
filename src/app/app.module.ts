@@ -13,6 +13,7 @@ import {PluginComponent} from './plugin/plugin.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {TreeModule} from 'angular-tree-component';
 import {FileSystemService} from './files-system-service';
+import {SelectionService} from './selection-service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,10 @@ import {FileSystemService} from './files-system-service';
     FlexLayoutModule,
     TreeModule
   ],
-  providers: [FileSystemService],
+  providers: [
+      FileSystemService,
+      SelectionService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

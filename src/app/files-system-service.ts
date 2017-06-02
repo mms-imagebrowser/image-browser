@@ -15,4 +15,11 @@ export class FileSystemService {
       return resp.json();
     });
   }
+
+  public getImageFileList(path: string): Observable<any> {
+    return this.http.get(this.fileSystemUrl + '/listimages/?path=' + path).map((resp) => {
+      console.log(resp.json());
+      return resp.json();
+    });
+  }
 }

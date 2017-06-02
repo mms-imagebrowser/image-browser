@@ -77,6 +77,14 @@ namespace express_api {
       }
     });
   });
+
+  app.get('/api/filesystem/listimages/', (req: Request, resp: Response) => {
+    fileSystemService.listimages(req.query.path, files => {
+      if (files) {
+        resp.send(files);
+      }
+    });
+  });
   // Start the web app
   app.listen(port, () => console.log(`Express app listening on port ${port}`));
 }
