@@ -21,6 +21,8 @@ namespace express_api {
   });
 
   app.get('/api/plugins/', (req: Request, resp: Response) => {
+    resp.header('Access-Control-Allow-Origin', '*');
+    resp.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     console.log('get /plugins');
     pluginService.list(plugins => {
       resp.send(plugins);
@@ -39,6 +41,8 @@ namespace express_api {
   });
 
   app.get('/api/plugins/:name', (req: Request, resp: Response) => {
+    resp.header('Access-Control-Allow-Origin', '*');
+    resp.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     pluginService.load(req.params.name, plugin => {
       if (plugin) {
         resp.send(plugin);
