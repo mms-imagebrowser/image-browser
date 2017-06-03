@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {PluginService} from '../../services/plugin.service';
 
 @Component({
   selector: 'app-plugin-selector',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PluginSelectorComponent implements OnInit {
 
-  constructor() { }
+  @Output() selectedPluginEmitter: EventEmitter<string> = new EventEmitter();
+  private pluginNames: string[] = [];
+
+  constructor(pluginDataService: PluginService) {
+    pluginDataService.getPluginNames().subscribe((pluginNames: string[]) => {
+      this.pluginNames = pluginNames;
+    });
+  }
 
   ngOnInit() {
+  }
+
+  setSelectedPlugin(selectedPlugin: string) {
+    this.selectedPluginEmitter.emit(selectedPlugin);
   }
 
 }

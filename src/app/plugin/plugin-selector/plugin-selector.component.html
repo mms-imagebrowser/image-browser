@@ -1,3 +1,8 @@
-<p>
-  plugin-selector works!
-</p>
+<div>
+  <strong>Plugins:</strong>
+  <ul>
+    <li *ngFor="let pluginName of pluginNames">{{pluginName}}
+      <button (click)="setSelectedPlugin(pluginName)">Select</button>
+    </li>
+  </ul>
+</div>
