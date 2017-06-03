@@ -7,6 +7,8 @@ and extended with express as described in [this blog](https://javascriptrocks.wo
 
 Run `ng start` for the frontend and `ng serve-api` for the express backend. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+### FIXME: run `python -m SimpleHttpServer` for temporary quick and dirty image serving
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.

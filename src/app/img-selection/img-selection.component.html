@@ -2,6 +2,7 @@
     <div class="col-xs-12 col-sm-6 col-lg-4" *ngFor="let image of images">
         <div class="thumbnail" [class.selected]="image.selected" (click)="image.selected = !image.selected; onSelect();">
             <div class="caption">
+                <!-- FIXME proper image serving -->
                 <img src="http://localhost:8000/{{ image.path }}">
                 <p class="flex-text text-muted">{{ image.name }}</p>
             </div>
