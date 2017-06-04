@@ -7,7 +7,7 @@ and extended with express as described in [this blog](https://javascriptrocks.wo
 
 Run `ng start` for the frontend and `ng serve-api` for the express backend. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-### FIXME: run `python -m SimpleHttpServer` for temporary quick and dirty image serving
+### pictures are assumed to exist in `pictures` folder 
 
 ## Code scaffolding
 
