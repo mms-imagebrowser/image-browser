@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PluginService} from '../services/plugin.service';
-import {Plugin} from '../../api/plugin';
+import {Plugin} from '../../model/plugin';
 
 @Component({
   selector: 'app-plugin',

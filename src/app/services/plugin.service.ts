@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {Http} from '@angular/http';
-import {Plugin} from '../../api/plugin';
+import {Plugin} from '../../model/plugin';
 
 const host = 'http://localhost:3000';
 const pluginListRoute = '/api/plugins/';
