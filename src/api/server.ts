@@ -3,6 +3,7 @@ import {Request, Response} from 'express';
 import {PluginService} from './plugin-service';
 import * as bodyParser from 'body-parser';
 import {FileService} from './file-service';
+import * as nodepath from 'path';
 
 namespace express_api {
   const path = './plugins'; // TODO: external config
@@ -14,6 +15,9 @@ namespace express_api {
 
   // Plug in body parser middleware for posting JSON
   app.use(bodyParser.json());
+
+  // TODO: get image root from config
+  app.use('/pictures', express.static(nodepath.join(__dirname, '../../pictures')));
 
   // Handle GET for the root URL
   app.get('/api/', (req: Request, resp: Response) => {
@@ -72,6 +76,14 @@ namespace express_api {
 
   app.get('/api/filesystem/list/', (req: Request, resp: Response) => {
     fileSystemService.list(req.query.path, files => {
+      if (files) {
+        resp.send(files);
+      }
+    });
+  });
+
+  app.get('/api/filesystem/listimages/', (req: Request, resp: Response) => {
+    fileSystemService.listimages(req.query.path, files => {
       if (files) {
         resp.send(files);
       }
