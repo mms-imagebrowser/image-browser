@@ -1,6 +1,8 @@
 import * as fs from 'fs';
 import {Plugin} from './plugin';
 import * as PythonShell from 'python-shell';
+import {PluginInfo} from './pluginInfo';
+import {PluginOption} from './pluginOption';
 
 export class PluginService {
   private readonly _path: string;
@@ -67,6 +69,38 @@ export class PluginService {
     });
   }
 
+  getInfo(name: string, callback: (pluginInfo?: PluginInfo) => void) {
+    const path = this.createPathFromName(name);
+
+    this.execute(name, 'info', {}, null, (result) => {
+
+      if (result == null) {
+        console.log('Execute of info returned empty result.');
+        callback(null);
+      }
+
+      console.log(result[0]);
+
+      const data = result[0];
+      const options: PluginOption[] = [];
+
+      data.options.forEach(option => options.push(new PluginOption(option.key,
+        option.type,
+        option.min,
+        option.max,
+        option.value))
+      );
+
+      const info: PluginInfo = new PluginInfo(
+        data.title,
+        data.description,
+        data.type,
+        options);
+
+      callback(info);
+    });
+  }
+
   delete(name: string, callback: (success) => void) {
     fs.unlink(this.createPathFromName(name), err => {
       callback(!err);
@@ -77,11 +111,16 @@ export class PluginService {
     return this._path + '/' + name + '.py';
   }
 
-  execute(name: string, action: string, options: JSON, imagePath: string, callback: (result?: JSON) => void) {
-    options['imagePath'] = imagePath;
+  execute(name: string, action: string, options: object /*JSON*/, imagePath: string, callback: (result?: any/*JSON*/) => void) {
+
+    if (imagePath != null) {
+      options['imagePath'] = imagePath;
+    }
+
     options['pluginName'] = name;
     options['action'] = action;
     console.log(`Applying plugin "${name}" with action "${action}" to ${imagePath}`);
+    console.log(`options: ${JSON.stringify(options)}`);
     const pyOptions = {
       mode: 'json',
       args: [JSON.stringify(options)],

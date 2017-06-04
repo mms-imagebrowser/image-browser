@@ -53,6 +53,19 @@ namespace express_api {
     });
   });
 
+  app.get('/api/plugins/:name/info', (req: Request, resp: Response) => {
+    resp.header('Access-Control-Allow-Origin', '*');
+    resp.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    pluginService.getInfo(req.params.name, pluginInfo => {
+      if (pluginInfo) {
+        resp.send(pluginInfo);
+      } else {
+        resp.status(404);
+        resp.send('');
+      }
+    });
+  });
+
   app.delete('/api/plugins/:name', (req: Request, resp: Response) => {
     console.log(req.params);
     pluginService.delete(req.params.name, success => {
