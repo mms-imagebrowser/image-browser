@@ -1,8 +1,8 @@
 import * as fs from 'fs';
-import {Plugin} from '../model/plugin';
+import {Plugin} from './plugin';
 import * as PythonShell from 'python-shell';
-import {PluginInfo} from '../model/pluginInfo';
-import {PluginOption} from '../model/pluginOption';
+import {PluginInfo} from './pluginInfo';
+import {PluginOption} from './pluginOption';
 
 export class PluginService {
   private readonly _path: string;
@@ -82,21 +82,7 @@ export class PluginService {
       console.log(result[0]);
 
       const data = result[0];
-      const options: PluginOption[] = [];
-
-      data.options.forEach(option => options.push(new PluginOption(option.key,
-        option.type,
-        option.min,
-        option.max,
-        option.value))
-      );
-
-      const info: PluginInfo = new PluginInfo(
-        data.title,
-        data.description,
-        data.type,
-        options);
-
+      const info = PluginInfo.fromData(data);
       callback(info);
     });
   }

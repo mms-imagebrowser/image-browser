@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {PluginInfo} from '../../../api/pluginInfo';
 
 @Component({
   selector: 'app-plugin-settings',
@@ -7,7 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class PluginSettingsComponent implements OnInit {
 
-  @Input() plugin: Plugin;
+  @Input() plugin: PluginInfo;
 
   constructor() { }
 

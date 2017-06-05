@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {Http} from '@angular/http';
-import {Plugin} from '../../model/plugin';
+import {PluginInfo} from '../../api/pluginInfo';
 
 const host = 'http://localhost:3000';
 const pluginListRoute = '/api/plugins/';
@@ -11,7 +11,7 @@ const pluginRoute = '/api/plugins/';
 export class PluginService {
 
   private pluginNames: ReplaySubject<string[]> = new ReplaySubject<string[]>();
-  private selectedPlugin: ReplaySubject<Plugin> = new ReplaySubject<Plugin>();
+  private selectedPlugin: ReplaySubject<PluginInfo> = new ReplaySubject<PluginInfo>();
 
   constructor(private http: Http) {
     this.selectedPlugin.next(null);
@@ -22,7 +22,7 @@ export class PluginService {
     return host + pluginListRoute;
   }
 
-  private getPluginUrl(pluginName: string): string {
+  private getPluginInfoUrl(pluginName: string): string {
     return host + pluginRoute + pluginName;
   }
 
@@ -42,17 +42,17 @@ export class PluginService {
 
     this.selectedPlugin.next(null);
 
-    this.http.get(this.getPluginUrl(pluginName))
+    this.http.get(this.getPluginInfoUrl(pluginName))
       .map(data => data.json())
       .subscribe(
-        pluginData => {
-          const plugin: Plugin = new Plugin(pluginData.title, pluginData.code);
-          this.selectedPlugin.next(plugin);
+        pluginInfoData => {
+          const pluginInfo: PluginInfo = PluginInfo.fromData(pluginInfoData);
+          this.selectedPlugin.next(pluginInfo);
         }
       );
   }
 
-  getSelectedPlugin(): ReplaySubject<Plugin> {
+  getSelectedPlugin(): ReplaySubject<PluginInfo> {
     return this.selectedPlugin;
   }
 
