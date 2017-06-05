@@ -15,6 +15,7 @@ import {TreeModule} from 'angular-tree-component';
 import {FileSystemService} from './files-system-service';
 import {PluginService} from './services/plugin.service';
 import {DynamicFormPluginOptionComponent} from './plugin/plugin-settings/dynamic-form-plugin-option.component';
+import {SelectionService} from './selection-service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,10 @@ import {DynamicFormPluginOptionComponent} from './plugin/plugin-settings/dynamic
     TreeModule,
     ReactiveFormsModule
   ],
-  providers: [FileSystemService, PluginService],
+  providers: [FileSystemService,
+      PluginService,
+      SelectionService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

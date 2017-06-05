@@ -7,6 +7,8 @@ and extended with express as described in [this blog](https://javascriptrocks.wo
 
 Run `npm start` for the frontend and `npm run serve-api` for the express backend. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+### pictures are assumed to exist in `pictures` folder 
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.

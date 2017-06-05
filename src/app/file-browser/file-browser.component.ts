@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FileSystemService} from '../files-system-service';
+import {SelectionService} from '../selection-service';
 import {TreeComponent} from 'angular-tree-component';
 import 'rxjs/Rx';
 
@@ -13,29 +14,32 @@ export class FileBrowserComponent implements OnInit {
   @ViewChild(TreeComponent)
   private tree: TreeComponent;
 
-  private fileTree: FileTreeNode[] = [new FileTreeNode(1, 'src', './src')];
+  // TODO: from config
+  private fileTree: FileTreeNode[] = [new FileTreeNode(1, 'pictures', './pictures', true)]; // root is assumed to be directory
   private index = 1;
 
-  onEvent(event: any) {
-    console.log(event);
+  onActivate(event: any) {
+    console.log('filetree activate', event.node.data.path, event.node.data.isDirectory());
+    if (event.node.data.isDirectory()) {
+      this.selectionService.setDirectory(event.node.data.path);
+    }
   }
 
-  constructor(private fileService: FileSystemService) {
+  constructor(private fileService: FileSystemService, private selectionService: SelectionService) {
   }
 
   ngOnInit() {
-    this.fileService.getFileList('./src').subscribe(response => {
-      console.log(response);
+    // TODO: external config
+    this.fileService.getFileList('./pictures').subscribe(response => {
       response.children.forEach(value => {
-        console.log('starting conversion ' + value);
-        if (value.path !== './src') {
+        if (value.path !== './pictures') {
           this.index++;
-          this.addTreeNode(this.fileTree[0], value);
-
+          if (value.children)
+            this.addTreeNode(this.fileTree[0], value);
         }
       });
-      console.log(JSON.stringify(this.fileTree));
       this.tree.treeModel.update();
+      this.selectionService.setDirectory('pictures'); // TODO: from config
     });
   }
 
@@ -44,13 +48,16 @@ export class FileBrowserComponent implements OnInit {
   }
 
   addTreeNode(parent: FileTreeNode, element: any): FileTreeNode {
-    const treeNode = new FileTreeNode(this.index, element.name, element.path);
+    console.log(element);
+    const treeNode = new FileTreeNode(this.index, element.name, element.path, false);
     parent.addChildren(treeNode);
     // parent.children.push(treeNode);
     if (!!element.children) {
+      treeNode.setIsDirectory(true);
       element.children.forEach(child => {
         this.index++;
-        this.addTreeNode(treeNode, child);
+        if (child.children)
+          this.addTreeNode(treeNode, child);
       });
     }
     return treeNode;
@@ -63,14 +70,24 @@ class FileTreeNode {
   private name: string;
   private path: string;
   private children: FileTreeNode[] = [];
+  private directory: boolean;
 
-  constructor(id: number, name: string, path: string) {
+  constructor(id: number, name: string, path: string, isDirectory: boolean) {
     this.id = id;
     this.name = name;
     this.path = path;
+    this.directory = isDirectory;
   }
 
   public addChildren(children: FileTreeNode) {
     this.children.push(children);
+  }
+
+  public setIsDirectory(flag: boolean) {
+    this.directory = flag;
+  }
+
+  public isDirectory() {
+    return this.directory;
   }
 }

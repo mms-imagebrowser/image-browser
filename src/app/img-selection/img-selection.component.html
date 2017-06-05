@@ -1,3 +1,11 @@
-<p>
-  img-selection works!
-</p>
+<div class="img-select-row row">
+    <div class="col-xs-12 col-sm-6 col-lg-4" *ngFor="let image of images">
+        <div class="thumbnail" [class.selected]="image.selected" (click)="image.selected = !image.selected; onSelect();">
+            <div class="caption">
+                <!-- TODO: path from config -->
+                <img src="http://localhost:3000/{{ image.path }}">
+                <p class="flex-text text-muted">{{ image.name }}</p>
+            </div>
+        </div>
+    </div>
+</div>
