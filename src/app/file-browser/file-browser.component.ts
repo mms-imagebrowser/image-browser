@@ -18,13 +18,9 @@ export class FileBrowserComponent implements OnInit {
   private fileTree: FileTreeNode[] = [new FileTreeNode(1, 'pictures', './pictures', true)]; // root is assumed to be directory
   private index = 1;
 
-  onEvent(event: any) {
-    console.log(event);
-  }
-
   onActivate(event: any) {
-    console.log("filetree activate", event.node.data.path, event.node.data.isDirectory());
-    if(event.node.data.isDirectory()) {
+    console.log('filetree activate', event.node.data.path, event.node.data.isDirectory());
+    if (event.node.data.isDirectory()) {
       this.selectionService.setDirectory(event.node.data.path);
     }
   }
@@ -35,15 +31,13 @@ export class FileBrowserComponent implements OnInit {
   ngOnInit() {
     // TODO: external config
     this.fileService.getFileList('./pictures').subscribe(response => {
-      // console.log(response);
       response.children.forEach(value => {
-        // console.log('starting conversion ' + value);
         if (value.path !== './pictures') {
           this.index++;
-          this.addTreeNode(this.fileTree[0], value);
+          if (value.children)
+            this.addTreeNode(this.fileTree[0], value);
         }
       });
-      // console.log(JSON.stringify(this.fileTree));
       this.tree.treeModel.update();
       this.selectionService.setDirectory('pictures'); // TODO: from config
     });
@@ -62,7 +56,8 @@ export class FileBrowserComponent implements OnInit {
       treeNode.setIsDirectory(true);
       element.children.forEach(child => {
         this.index++;
-        this.addTreeNode(treeNode, child);
+        if (child.children)
+          this.addTreeNode(treeNode, child);
       });
     }
     return treeNode;
