@@ -5,6 +5,8 @@ import json
 def info(options):
   info = {'title': 'Demo plugin',
           'pluginType': ['transform', 'display'],
+          'supportSingleImage': True,
+          'supportBatch': True,
           'options':  [{'title': 'Dummy Number',
                         'description': 'A dummy number for testing number input.',
                         'key': 'dummy_number',

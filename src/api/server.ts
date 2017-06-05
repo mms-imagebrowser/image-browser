@@ -4,6 +4,7 @@ import {PluginService} from './plugin-service';
 import * as bodyParser from 'body-parser';
 import {FileService} from './file-service';
 import * as nodepath from 'path';
+import {isNullOrUndefined} from 'util';
 
 namespace express_api {
   const path = './plugins'; // TODO: external config
@@ -79,9 +80,11 @@ namespace express_api {
   });
 
   app.post('/api/plugins/:name/execute', (req: Request, resp: Response) => {
-    console.log('Executing plugin ' + req.params.name);
-    pluginService.execute(req.params.name, req.query.action, req.body, req.query.imgPath, result => {
-      if (!result) {
+    const data = JSON.parse(req.body);
+    console.log('Executing plugin ' + data.name);
+
+    pluginService.execute(data.name, 'execute', data.args, data.imgPath, (result, err) => {
+      if (!isNullOrUndefined(err)) {
         resp.status(500);
         resp.send();
         console.log('Plugin execution failed');

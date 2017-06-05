@@ -12,6 +12,8 @@ def info(options):
     info = {'title': 'Brightness Filter',
             'description': 'Filters images which have an higher average brightness than the given threshold',
             'pluginType': ['display'],
+            'supportSingleImage': True,
+            'supportBatch': False,
             'options': [{'title': 'Threshold',
                          'description': 'The threshold level used for decision if an image should be filtered or not.',
                          'key': THRESHOLD_KEY,

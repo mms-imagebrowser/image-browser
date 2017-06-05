@@ -16,6 +16,8 @@ export class PluginInfo {
       data.title,
       data.description,
       data.pluginType,
+      data.supportSingleImage,
+      data.supportBatch,
       options);
 
     return info;
@@ -25,6 +27,8 @@ export class PluginInfo {
     public readonly title: string,
     public readonly description: string,
     public readonly pluginType: string[],
+    public readonly supportSingleImage: boolean,
+    public readonly supportBatch: boolean,
     public readonly options: PluginOption[]
   ) {}
 }

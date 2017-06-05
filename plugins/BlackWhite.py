@@ -12,6 +12,8 @@ def info(options):
     info = {'title': 'Black-White transformation',
             'description': 'Transforms pixel to black or white by comparing the value to a configurable threshold',
             'pluginType': ['transform'],
+            'supportSingleImage': True,
+            'supportBatch': False,
             'options': [{'title': 'Threshold',
                          'description': 'The threshold level used for decision if a pixel should be black or white.',
                          'key': THRESHOLD_KEY,
