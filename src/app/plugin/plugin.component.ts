@@ -17,7 +17,7 @@ export class PluginComponent implements OnInit {
   }
 
   pluginSelected(pluginName: string) {
-    console.log('plugin selected: ' + pluginName);
+    console.log('pluginInfo selected: ' + pluginName);
     this.pluginService.selectPlugin(pluginName);
     this.pluginService.getSelectedPlugin().subscribe(
       pluginInfo => {

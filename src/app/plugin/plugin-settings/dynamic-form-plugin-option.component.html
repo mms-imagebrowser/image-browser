@@ -1,0 +1,24 @@
+<div [formGroup]="form">
+  <label [attr.for]="option.key">{{option.title}}</label>
+  <p>
+    {{option.description}}
+  </p>
+  <div [ngSwitch]="option.inputType">
+    <div *ngSwitchCase="'string'">
+      <input [(formControlName)]="option.key"
+             [id]="option.key" type="text">
+    </div>
+    <div *ngSwitchCase="'number'">
+      <input [formControlName]="option.key" [id]="option.key" type="number"
+             [min]="option.min" [max]="option.max" step="1" [(value)]="form.controls[option.key].value">
+      <input [formControlName]="option.key" [id]="option.key" type="range"
+             [min]="option.min" [max]="option.max" step="1" [(value)]="form.controls[option.key].value">
+    </div>
+    <div *ngSwitchCase="'dropdown'">
+      <select [id]="option.key" [(formControlName)]="option.key">
+        <option *ngFor="let opt of option.dropdownOptions" [value]="opt">{{opt}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="errorMessage" *ngIf="!isValid">{{option.label}} is required</div>
+</div>
