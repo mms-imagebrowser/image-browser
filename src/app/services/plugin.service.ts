@@ -23,7 +23,7 @@ export class PluginService {
   }
 
   private getPluginInfoUrl(pluginName: string): string {
-    return host + pluginRoute + pluginName;
+    return host + pluginRoute + pluginName + '/info';
   }
 
   updateData() {
