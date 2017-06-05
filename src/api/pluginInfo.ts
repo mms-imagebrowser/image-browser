@@ -2,19 +2,20 @@ import {PluginOption} from './pluginOption';
 export class PluginInfo {
   public static fromData(data: any): PluginInfo {
     const options: PluginOption[] = [];
-    data.options.forEach(option => options.push(new PluginOption(option.key,
+    data.options.forEach(option => options.push(new PluginOption(option.title,
+      option.key,
       option.description,
-      option.type,
+      option.inputType,
       option.dropdownOptions,
       option.min,
       option.max,
-      option.value))
+      option.defaultValue))
     );
 
     const info: PluginInfo = new PluginInfo(
       data.title,
       data.description,
-      data.type,
+      data.pluginType,
       options);
 
     return info;
@@ -23,7 +24,7 @@ export class PluginInfo {
   public constructor(
     public readonly title: string,
     public readonly description: string,
-    public readonly type: string[],
+    public readonly pluginType: string[],
     public readonly options: PluginOption[]
   ) {}
 }

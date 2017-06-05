@@ -11,12 +11,14 @@ THRESHOLD_KEY = 'threshold'
 def info(options):
     info = {'title': 'Brightness Filter',
             'description': 'Filters images which have an higher average brightness than the given threshold',
-            'type': ['display'],
-            'options': [{'key': THRESHOLD_KEY,
-                         'type': 'integer',
+            'pluginType': ['display'],
+            'options': [{'title': 'Threshold',
+                         'description': 'The threshold level used for decision if an image should be filtered or not.',
+                         'key': THRESHOLD_KEY,
+                         'inputType': 'number',
                          'min': 0,
                          'max': 255,
-                         'default': DEFAULT_THRESHOLD}]}
+                         'defaultValue': DEFAULT_THRESHOLD}]}
     return json.dumps(info)
 
 
