@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FileSystemService} from '../files-system-service';
-import {SelectionService} from '../selection-service';
+import {FileSystemService} from '../services/files-system-service';
+import {SelectionService} from '../services/selection-service';
 import {TreeComponent} from 'angular-tree-component';
 import 'rxjs/Rx';
 

@@ -41,7 +41,7 @@
     "@angular/cli": "1.0.2",
     "@angular/compiler-cli": "^4.0.0",
     "@types/jasmine": "2.5.38",
-    "@types/node": "^6.0.73",
+    "@types/node": "^6.0.78",
     "codelyzer": "~2.0.0",
     "gulp": "^3.9.1",
     "gulp-nodemon": "^2.2.1",

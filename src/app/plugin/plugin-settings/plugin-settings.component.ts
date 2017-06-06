@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {PluginInfo} from '../../../api/pluginInfo';
 import {FormControl, FormGroup} from '@angular/forms';
 import {PluginExecutionParams} from '../../../api/pluginExecutionParams';
-import {SelectionService} from '../../selection-service';
+import {SelectionService} from '../../services/selection-service';
 
 
 import {PluginService} from '../../services/plugin.service';

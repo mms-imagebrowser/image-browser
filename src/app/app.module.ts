@@ -12,10 +12,10 @@ import {PreviewComponent} from './preview/preview.component';
 import {PluginComponent} from './plugin/plugin.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {TreeModule} from 'angular-tree-component';
-import {FileSystemService} from './files-system-service';
+import {FileSystemService} from './services/files-system-service';
 import {PluginService} from './services/plugin.service';
 import {DynamicFormPluginOptionComponent} from './plugin/plugin-settings/dynamic-form-plugin-option.component';
-import {SelectionService} from './selection-service';
+import {SelectionService} from './services/selection-service';
 
 @NgModule({
   declarations: [

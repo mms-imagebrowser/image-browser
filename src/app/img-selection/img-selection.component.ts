@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FileSystemService } from '../files-system-service';
-import { SelectionService } from '../selection-service';
-import { ImageFile } from '../selection-service';
+import {Component, OnInit} from '@angular/core';
+import {FileSystemService} from '../services/files-system-service';
+import {ImageFile, SelectionService} from '../services/selection-service';
 
 @Component({
   selector: 'app-img-selection',

@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {Observable} from 'rxjs/Observable';
-import {Http, RequestOptions, Response, Headers, Request, RequestMethod} from '@angular/http';
+import {Headers, Http, RequestOptions, Response} from '@angular/http';
 import {PluginInfo} from '../../api/pluginInfo';
 import {PluginExecutionParams} from '../../api/pluginExecutionParams';
-import * as url from 'url';
+import {SelectionService} from './selection-service';
 
 const host = 'http://localhost:3000';
 const pluginListRoute = '/api/plugins/';
@@ -17,7 +16,7 @@ export class PluginService {
   private pluginNames: ReplaySubject<string[]> = new ReplaySubject<string[]>();
   private selectedPlugin: ReplaySubject<PluginInfo> = new ReplaySubject<PluginInfo>();
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private selectionService: SelectionService) {
     this.selectedPlugin.next(null);
     this.updateData();
   }
@@ -71,28 +70,12 @@ export class PluginService {
       options
     ).map((res: Response) => {
       if (res) {
+        //reload directory
+        this.selectionService.fireDirectoryUpdate();
         return {status: res.status, json: res.json()};
       }
     });
 
-
-    // const headers = new Headers();
-    // headers.append('Content-Type', 'application/json');
-    // headers.append('Accept', 'application/json');
-    //
-    // const requestoptions = new RequestOptions({
-    //   method: RequestMethod.Post,
-    //   url: this.getPluginExecutionUrl(),
-    //   headers: headers,
-    //   body: JSON.stringify(pluginParams)
-    // });
-    //
-    // return this.http.request(new Request(requestoptions))
-    //   .map((res: Response) => {
-    //     if (res) {
-    //       return {status: res.status, json: res.json()};
-    //     }
-    //   });
   }
 
   getSelectedPlugin(): ReplaySubject<PluginInfo> {

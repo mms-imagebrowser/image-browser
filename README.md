@@ -7,7 +7,9 @@ and extended with express as described in [this blog](https://javascriptrocks.wo
 
 Run `npm start` for the frontend and `npm run serve-api` for the express backend. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-### pictures are assumed to exist in `pictures` folder 
+## Importat Infos
+* pictures are assumed to exist in `pictures` folder 
+* Pillow needs to be installed in the systems python environment (with `pip install pillow`) 
 
 ## Code scaffolding
 
