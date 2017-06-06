@@ -1,6 +1,6 @@
 <div class="row">
-  <app-plugin-selector></app-plugin-selector>
+  <app-plugin-selector (selectedPluginEmitter)="pluginSelected($event)"></app-plugin-selector>
 </div>
 <div class="row">
-  <app-plugin-settings></app-plugin-settings>
+  <app-plugin-settings [pluginInfo]="selectedPlugin"></app-plugin-settings>
 </div>

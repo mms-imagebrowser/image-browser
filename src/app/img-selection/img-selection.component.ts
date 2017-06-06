@@ -20,20 +20,21 @@ export class ImgSelectionComponent implements OnInit {
       console.log('selection init');
       console.log(response);
       response.children.forEach(file => {
-        if(!file.children) {
+        if (!file.children) {
+          console.log(file.path);
           this.images.push(new ImageFile(file.name, file.path, file.extension, false, file.size));
         }
       });
     });
 
     this.selectionService.getDirectory().subscribe(selectedDirectory => {
-      console.log("getdir sub: ", selectedDirectory);
+      console.log('getdir sub: ', selectedDirectory);
       this.images = [];
       this.selectionService.setImages(this.images);
       this.fileService.getImageFileList(selectedDirectory.path).subscribe(response => {
         console.log('selection update');
         response.children.forEach(file => {
-          if(!file.children) {
+          if (!file.children) {
             this.images.push(new ImageFile(file.name, file.path, file.extension, false, file.size));
           }
         });
@@ -43,11 +44,11 @@ export class ImgSelectionComponent implements OnInit {
     // Subscription PoC
     this.selectionService.getImages().subscribe(selectedImages => {
       console.log(selectedImages);
-    })
+    });
   }
 
   onSelect() {
-    this.selectionService.setImages(this.images.filter(image => image.selected == true));
+    this.selectionService.setImages(this.images.filter(image => image.selected));
   }
 }
 

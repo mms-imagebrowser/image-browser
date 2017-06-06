@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {isNullOrUndefined} from 'util';
 
 @Injectable()
 export class SelectionService {
-    private directory = new Subject<any>();
-    private images = new Subject<any>();
+    private directory = new BehaviorSubject<any>('/');
+    private images = new BehaviorSubject<any>(null);
 
     public setDirectory(path: string) {
         this.directory.next({ path: path });
@@ -16,11 +17,24 @@ export class SelectionService {
     }
 
     public setImages(images: ImageFile[]) {
-        this.images.next({images: images})
+        this.images.next({images: images});
     }
 
     public getImages(): Observable<any> {
         return this.images.asObservable();
+    }
+
+    public getSelectedImagePathsSync(): string[] {
+        const paths: string[] = [];
+
+        if (!isNullOrUndefined(this.images.getValue()) &&
+            !isNullOrUndefined(this.images.getValue().images)) {
+            this.images.getValue().images.forEach(image => {
+                    paths.push(image.path);
+                }
+            );
+        }
+        return paths;
     }
 }
 

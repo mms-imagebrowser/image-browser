@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
@@ -13,6 +13,8 @@ import {PluginComponent} from './plugin/plugin.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {TreeModule} from 'angular-tree-component';
 import {FileSystemService} from './files-system-service';
+import {PluginService} from './services/plugin.service';
+import {DynamicFormPluginOptionComponent} from './plugin/plugin-settings/dynamic-form-plugin-option.component';
 import {SelectionService} from './selection-service';
 
 @NgModule({
@@ -22,6 +24,7 @@ import {SelectionService} from './selection-service';
     ImgSelectionComponent,
     PluginSelectorComponent,
     PluginSettingsComponent,
+    DynamicFormPluginOptionComponent,
     PreviewComponent,
     PluginComponent
   ],
@@ -30,10 +33,11 @@ import {SelectionService} from './selection-service';
     FormsModule,
     HttpModule,
     FlexLayoutModule,
-    TreeModule
+    TreeModule,
+    ReactiveFormsModule
   ],
-  providers: [
-      FileSystemService,
+  providers: [FileSystemService,
+      PluginService,
       SelectionService
   ],
   bootstrap: [AppComponent]

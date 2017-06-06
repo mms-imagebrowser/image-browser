@@ -11,12 +11,16 @@ THRESHOLD_KEY = 'threshold'
 def info(options):
     info = {'title': 'Black-White transformation',
             'description': 'Transforms pixel to black or white by comparing the value to a configurable threshold',
-            'type': ['transform'],
-            'options': [{'key': THRESHOLD_KEY,
-                         'type': 'integer',
+            'pluginType': ['transform'],
+            'supportSingleImage': True,
+            'supportBatch': False,
+            'options': [{'title': 'Threshold',
+                         'description': 'The threshold level used for decision if a pixel should be black or white.',
+                         'key': THRESHOLD_KEY,
+                         'inputType': 'number',
                          'min': 0,
                          'max': 255,
-                         'default': DEFAULT_THRESHOLD}]}
+                         'defaultValue': DEFAULT_THRESHOLD}]}
     return json.dumps(info)
 
 

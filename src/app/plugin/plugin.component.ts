@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {PluginService} from '../services/plugin.service';
+import {PluginInfo} from '../../api/pluginInfo';
 
 @Component({
   selector: 'app-plugin',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PluginComponent implements OnInit {
 
-  constructor() { }
+  private selectedPlugin: PluginInfo;
+
+  constructor(private pluginService: PluginService) { }
 
   ngOnInit() {
   }
 
+  pluginSelected(pluginName: string) {
+    console.log('pluginInfo selected: ' + pluginName);
+    this.pluginService.selectPlugin(pluginName);
+    this.pluginService.getSelectedPlugin().subscribe(
+      pluginInfo => {
+        this.selectedPlugin = pluginInfo;
+        console.log('selected Plugin: ');
+        console.log(pluginInfo);
+      }
+    );
+  }
 }

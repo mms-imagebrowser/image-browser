@@ -4,6 +4,7 @@ import {PluginService} from './plugin-service';
 import * as bodyParser from 'body-parser';
 import {FileService} from './file-service';
 import * as nodepath from 'path';
+import {isNullOrUndefined} from 'util';
 
 namespace express_api {
   const path = './plugins'; // TODO: external config
@@ -16,6 +17,26 @@ namespace express_api {
   // Plug in body parser middleware for posting JSON
   app.use(bodyParser.json());
 
+  // Add headers
+  app.use(function (req, res, next) {
+
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+  });
+
   // TODO: get image root from config
   app.use('/pictures', express.static(nodepath.join(__dirname, '../../pictures')));
 
@@ -25,6 +46,8 @@ namespace express_api {
   });
 
   app.get('/api/plugins/', (req: Request, resp: Response) => {
+    resp.header('Access-Control-Allow-Origin', '*');
+    resp.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     console.log('get /plugins');
     pluginService.list(plugins => {
       resp.send(plugins);
@@ -43,9 +66,24 @@ namespace express_api {
   });
 
   app.get('/api/plugins/:name', (req: Request, resp: Response) => {
+    resp.header('Access-Control-Allow-Origin', '*');
+    resp.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     pluginService.load(req.params.name, plugin => {
       if (plugin) {
         resp.send(plugin);
+      } else {
+        resp.status(404);
+        resp.send('');
+      }
+    });
+  });
+
+  app.get('/api/plugins/:name/info', (req: Request, resp: Response) => {
+    resp.header('Access-Control-Allow-Origin', '*');
+    resp.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    pluginService.getInfo(req.params.name, pluginInfo => {
+      if (pluginInfo) {
+        resp.send(pluginInfo);
       } else {
         resp.status(404);
         resp.send('');
@@ -61,10 +99,17 @@ namespace express_api {
     });
   });
 
-  app.post('/api/plugins/:name/execute', (req: Request, resp: Response) => {
-    console.log('Executing plugin ' + req.params.name);
-    pluginService.execute(req.params.name, req.query.action, req.body, req.query.imgPath, result => {
-      if (!result) {
+  app.post('/api/plugins/execute', (req: Request, resp: Response) => {
+    console.log('execute plugin called');
+    console.log(req.body);
+    console.log('pluginName: ' + req.body.pluginName);
+    console.log('args: ' + req.body.args);
+    console.log('imgPaths: ' + req.body.imgPaths);
+    const data = req.body;
+    console.log('Executing plugin ' + data.name);
+
+    pluginService.execute(data.pluginName, 'execute', data.args, data.imgPaths, (result, err) => {
+      if (!isNullOrUndefined(err)) {
         resp.status(500);
         resp.send();
         console.log('Plugin execution failed');
@@ -72,6 +117,7 @@ namespace express_api {
         resp.send(result);
       }
     });
+
   });
 
   app.get('/api/filesystem/list/', (req: Request, resp: Response) => {
