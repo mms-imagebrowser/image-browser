@@ -1,6 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {PluginInfo} from '../../../api/pluginInfo';
 import {FormControl, FormGroup} from '@angular/forms';
+import {PluginExecutionParams} from '../../../api/pluginExecutionParams';
+import {SelectionService} from '../../selection-service';
+
+
+
+import {PluginService} from '../../services/plugin.service';
 @Component({
   selector: 'app-plugin-settings',
   templateUrl: './plugin-settings.component.html',
@@ -19,9 +25,11 @@ export class PluginSettingsComponent implements OnInit {
   }
 
   private _pluginInfo: PluginInfo;
+
   form: FormGroup;
 
-  constructor() {
+  constructor(private selectorService: SelectionService,
+  private pluginService: PluginService) {
   }
 
   ngOnInit() {
@@ -49,6 +57,22 @@ export class PluginSettingsComponent implements OnInit {
   onSubmit() {
     console.log('plugin to be executed');
     console.log(this.form.value);
+    const pluginExecutionParams: PluginExecutionParams =
+      new PluginExecutionParams(
+        this.pluginInfo.pluginName,
+        this.form.value,
+        this.selectorService.getSelectedImagePathsSync()
+      );
+
+    this.pluginService.executePlugin(this.pluginInfo.pluginName, pluginExecutionParams).subscribe(
+      response => {
+        if (response.ok) {
+          console.log('Plugin execution successful');
+        } else {
+          console.log('Plugin execution failed');
+        }
+      }
+    );
   }
 
 }

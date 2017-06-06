@@ -13,6 +13,7 @@ export class PluginInfo {
     );
 
     const info: PluginInfo = new PluginInfo(
+      data.pluginName,
       data.title,
       data.description,
       data.pluginType,
@@ -24,6 +25,7 @@ export class PluginInfo {
   }
 
   public constructor(
+    public readonly pluginName: string,
     public readonly title: string,
     public readonly description: string,
     public readonly pluginType: string[],

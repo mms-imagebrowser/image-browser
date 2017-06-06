@@ -79,11 +79,19 @@ namespace express_api {
     });
   });
 
-  app.post('/api/plugins/:name/execute', (req: Request, resp: Response) => {
+  app.post('/api/plugins/execute', (req: Request, resp: Response) => {
+    resp.header('Access-Control-Allow-Origin', '*');
+    resp.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    resp.header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+    console.log('execute plugin called');
+    console.log(req.body);
+    console.log('pluginName: ' + req.body.pluginName);
+    console.log('args: ' + req.body.args);
+    console.log('imgPaths: ' + req.body.imgPaths);
     const data = JSON.parse(req.body);
     console.log('Executing plugin ' + data.name);
 
-    pluginService.execute(data.name, 'execute', data.args, data.imgPath, (result, err) => {
+    pluginService.execute(data.pluginName, 'execute', data.args, data.imgPaths, (result, err) => {
       if (!isNullOrUndefined(err)) {
         resp.status(500);
         resp.send();
@@ -92,6 +100,7 @@ namespace express_api {
         resp.send(result);
       }
     });
+
   });
 
   app.get('/api/filesystem/list/', (req: Request, resp: Response) => {

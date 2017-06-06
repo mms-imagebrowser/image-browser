@@ -21,6 +21,7 @@ export class ImgSelectionComponent implements OnInit {
       console.log(response);
       response.children.forEach(file => {
         if (!file.children) {
+          console.log(file.path);
           this.images.push(new ImageFile(file.name, file.path, file.extension, false, file.size));
         }
       });

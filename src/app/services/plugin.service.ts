@@ -1,11 +1,14 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {Http} from '@angular/http';
+import {Observable} from 'rxjs/Observable';
+import {Http, RequestOptions, Response, Headers} from '@angular/http';
 import {PluginInfo} from '../../api/pluginInfo';
+import {PluginExecutionParams} from '../../api/pluginExecutionParams';
 
 const host = 'http://localhost:3000';
 const pluginListRoute = '/api/plugins/';
 const pluginRoute = '/api/plugins/';
+const pluginExecutionRoute = '/api/plugins/execute';
 
 @Injectable()
 export class PluginService {
@@ -24,6 +27,10 @@ export class PluginService {
 
   private getPluginInfoUrl(pluginName: string): string {
     return host + pluginRoute + pluginName + '/info';
+  }
+
+  private getPluginExecutionUrl() {
+    return host + pluginExecutionRoute;
   }
 
   updateData() {
@@ -49,6 +56,18 @@ export class PluginService {
           const pluginInfo: PluginInfo = PluginInfo.fromData(pluginInfoData);
           this.selectedPlugin.next(pluginInfo);
         }
+      );
+  }
+
+  executePlugin(pluginName: string,
+                pluginParams: PluginExecutionParams): Observable<Response> {
+    //const headers = new Headers({'Content-Type': 'application/json'});
+    // const options = new RequestOptions({headers: headers});
+
+
+    return this.http.post(
+      this.getPluginExecutionUrl(),
+      JSON.stringify(pluginParams)
       );
   }
 

@@ -102,7 +102,15 @@ export class PluginService {
         console.log(result[0]);
 
         const data = result[0];
-        const info = PluginInfo.fromData(data);
+        let info = PluginInfo.fromData(data);
+        // save plugin name to info; info is immutable..
+        info = new PluginInfo(pluginName,
+          info.title,
+          info.description,
+          info.pluginType,
+          info.supportSingleImage,
+          info.supportBatch,
+          info.options);
         this.addPluginInfoToCache(pluginName, info);
         callback(info);
       });
