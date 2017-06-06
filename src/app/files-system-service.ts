@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class FileSystemService {
-  private fileSystemUrl: string = 'api/filesystem';
+  private fileSystemUrl = 'api/filesystem';
 
   constructor(private http: Http) {
   }

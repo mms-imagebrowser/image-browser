@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class SelectionService {
     }
 
     public setImages(images: ImageFile[]) {
-        this.images.next({images: images})
+        this.images.next({images: images});
     }
 
     public getImages(): Observable<any> {

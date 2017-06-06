@@ -34,8 +34,9 @@ export class FileBrowserComponent implements OnInit {
       response.children.forEach(value => {
         if (value.path !== './pictures') {
           this.index++;
-          if (value.children)
+          if (value.children) {
             this.addTreeNode(this.fileTree[0], value);
+          }
         }
       });
       this.tree.treeModel.update();
@@ -56,8 +57,9 @@ export class FileBrowserComponent implements OnInit {
       treeNode.setIsDirectory(true);
       element.children.forEach(child => {
         this.index++;
-        if (child.children)
+        if (child.children) {
           this.addTreeNode(treeNode, child);
+        }
       });
     }
     return treeNode;
