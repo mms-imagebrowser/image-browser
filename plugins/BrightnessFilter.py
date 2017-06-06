@@ -44,7 +44,4 @@ def execute(options):
     global_avg = sum / (rgb_im.size[0] * rgb_im.size[1])
     display = global_avg >= threshold
 
-    filename, file_extension = os.path.splitext(image_path)
-    new_path = filename + "_bw" + file_extension
-    rgb_im.save(new_path)
     return json.dumps({'display': display})
