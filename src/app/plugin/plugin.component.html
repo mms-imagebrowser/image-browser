@@ -1,6 +1,22 @@
-<div class="row">
-  <app-plugin-selector (selectedPluginEmitter)="pluginSelected($event)"></app-plugin-selector>
-</div>
-<div class="row">
-  <app-plugin-settings [pluginInfo]="selectedPlugin"></app-plugin-settings>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Plugins</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row plugin-list scrollable">
+      <div class="subpanel">
+        <app-plugin-selector (selectedPluginEmitter)="pluginSelected($event)"></app-plugin-selector>
+      </div>
+    </div>
+    <div class="row plugin-settings">
+      <div class="panel panel-default subpanel">
+        <div class="panel-heading">
+          <h4 class="panel-title">Plugin Settings{{pluginTitle}}</h4>
+        </div>
+        <div class="panel-body scrollable">
+          <app-plugin-settings [pluginInfo]="selectedPlugin"></app-plugin-settings>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

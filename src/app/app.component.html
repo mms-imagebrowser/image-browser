@@ -1,16 +1,30 @@
 <div id="container">
-  <div id="left-col">
-    <div id="file-browser">
-      <app-file-browser></app-file-browser>
+  <div class="row" style="width: 100%;height: inherit;">
+    <div class="col-md-3">
+      <div id="file-browser">
+        <app-file-browser></app-file-browser>
+      </div>
     </div>
-    <div id="preview">
-      <app-preview></app-preview>
+    <div class="col-md-6" style="height: inherit;">
+      <div class="row" style="height: 95%;">
+        <div class="col-md-12" style="height: 100%;">
+          <div class="image-selection"style="height: 100%;">
+            <app-img-selection></app-img-selection>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div id="preview">
+            <app-preview></app-preview>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div id="files">
-    <app-img-selection></app-img-selection>
-  </div>
-  <div id="plugin">
-    <app-plugin></app-plugin>
+    <div class="col-md-3">
+      <div id="plugin">
+        <app-plugin></app-plugin>
+      </div>
+    </div>
   </div>
 </div>

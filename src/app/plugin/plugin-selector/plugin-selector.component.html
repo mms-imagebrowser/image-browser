@@ -1,8 +1,5 @@
-<div>
-  <strong>Plugins:</strong>
-  <ul>
-    <li *ngFor="let pluginName of pluginNames">{{pluginName}}
-      <button (click)="setSelectedPlugin(pluginName)">Select</button>
-    </li>
-  </ul>
+<div class="list-group">
+  <button *ngFor="let pluginName of pluginNames" class="list-group-item" (click)="setSelectedPlugin(pluginName)">
+    {{pluginName}}
+  </button>
 </div>
