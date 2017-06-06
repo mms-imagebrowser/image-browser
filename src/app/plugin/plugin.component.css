@@ -1,0 +1,15 @@
+.subpanel {
+  margin: 1em;
+}
+
+.plugin-list {
+  height: 33%;
+}
+
+.plugin-settings {
+  height:66%;
+}
+
+.scrollable {
+  overflow-y: auto;
+}

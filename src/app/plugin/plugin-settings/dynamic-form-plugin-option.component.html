@@ -4,21 +4,31 @@
     {{option.description}}
   </p>
   <div [ngSwitch]="option.inputType">
-    <div *ngSwitchCase="'string'">
+
+
+    <div *ngSwitchCase="'string'" class="input-group">
       <input [(formControlName)]="option.key"
-             [id]="option.key" type="text">
+             [id]="option.key" type="text" class="form-control" style="width: 100%;">
     </div>
-    <div *ngSwitchCase="'number'">
+
+
+    <div *ngSwitchCase="'number'" class="input-group">
       <input [formControlName]="option.key" [id]="option.key" type="number"
-             [min]="option.min" [max]="option.max" step="1" [(value)]="form.controls[option.key].value">
+             [min]="option.min" [max]="option.max" step="1" [(value)]="form.controls[option.key].value"
+             class="form-control" style="width: 30%">
       <input [formControlName]="option.key" [id]="option.key" type="range"
-             [min]="option.min" [max]="option.max" step="1" [(value)]="form.controls[option.key].value">
+             [min]="option.min" [max]="option.max" step="1" [(value)]="form.controls[option.key].value"
+              class="form-control" style="width: 70%;float:right;">
     </div>
-    <div *ngSwitchCase="'dropdown'">
-      <select [id]="option.key" [(formControlName)]="option.key">
+
+
+    <div *ngSwitchCase="'dropdown'" class="input-group">
+      <select [id]="option.key" [(formControlName)]="option.key" class="form-control" style="width: 100%;">
         <option *ngFor="let opt of option.dropdownOptions" [value]="opt">{{opt}}</option>
       </select>
     </div>
+
+
   </div>
   <div class="errorMessage" *ngIf="!isValid">{{option.label}} is required</div>
 </div>

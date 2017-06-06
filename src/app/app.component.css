@@ -7,13 +7,6 @@
   width: 100%;
 }
 
-#left-col {
-  display: flex;
-  flex-direction: column;
-  width: 25%;
-  height: 100%;
-}
-
 #file-browser {
   display: flex;
   resize: vertical;
@@ -27,9 +20,8 @@
 #preview {
 }
 
-#files {
+.image-selection {
   display: flex;
-  width: 50%;
   max-height: 100%;
   overflow-y: auto;
 }

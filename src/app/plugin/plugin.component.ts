@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {PluginService} from '../services/plugin.service';
 import {PluginInfo} from '../../api/pluginInfo';
+import {isNull, isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-plugin',
@@ -14,6 +15,14 @@ export class PluginComponent implements OnInit {
   constructor(private pluginService: PluginService) { }
 
   ngOnInit() {
+  }
+
+  get pluginTitle() {
+    if (isNullOrUndefined(this.selectedPlugin)) {
+      return '';
+    } else {
+      return ': ' + this.selectedPlugin.title;
+    }
   }
 
   pluginSelected(pluginName: string) {

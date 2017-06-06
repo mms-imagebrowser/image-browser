@@ -1,22 +1,19 @@
-<p>
-  plugin-settings works!
-</p>
-  SelectedPlugin
-
-
 <div>
-  <strong>{{pluginInfo == undefined ? "none" : pluginInfo?.title}}</strong>
   <div *ngIf="pluginInfoIsSet()">
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
-      <div *ngFor="let option of pluginInfo.options" class="form-row">
+      <div *ngFor="let option of pluginInfo.options">
         <app-plugin-option [option]="option" [form]="form"></app-plugin-option>
       </div>
-      <div class="form-row">
-        <button type="submit" [disabled]="!form.valid">Execute Plugin</button>
+      <div>
+        <button class="form-control" type="submit" [disabled]="!form.valid">Execute Plugin</button>
       </div>
     </form>
   </div>
   <div *ngIf="!pluginInfoIsSet()">
-    Please select a plugin!
+    <div class="alert alert-info" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      Please select a plugin!
+    </div>
   </div>
 </div>
