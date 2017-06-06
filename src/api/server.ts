@@ -17,6 +17,26 @@ namespace express_api {
   // Plug in body parser middleware for posting JSON
   app.use(bodyParser.json());
 
+  // Add headers
+  app.use(function (req, res, next) {
+
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+  });
+
   // TODO: get image root from config
   app.use('/pictures', express.static(nodepath.join(__dirname, '../../pictures')));
 
@@ -80,15 +100,12 @@ namespace express_api {
   });
 
   app.post('/api/plugins/execute', (req: Request, resp: Response) => {
-    resp.header('Access-Control-Allow-Origin', '*');
-    resp.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    resp.header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
     console.log('execute plugin called');
     console.log(req.body);
     console.log('pluginName: ' + req.body.pluginName);
     console.log('args: ' + req.body.args);
     console.log('imgPaths: ' + req.body.imgPaths);
-    const data = JSON.parse(req.body);
+    const data = req.body;
     console.log('Executing plugin ' + data.name);
 
     pluginService.execute(data.pluginName, 'execute', data.args, data.imgPaths, (result, err) => {

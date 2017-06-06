@@ -5,7 +5,6 @@ import {PluginExecutionParams} from '../../../api/pluginExecutionParams';
 import {SelectionService} from '../../selection-service';
 
 
-
 import {PluginService} from '../../services/plugin.service';
 @Component({
   selector: 'app-plugin-settings',
@@ -29,7 +28,7 @@ export class PluginSettingsComponent implements OnInit {
   form: FormGroup;
 
   constructor(private selectorService: SelectionService,
-  private pluginService: PluginService) {
+              private pluginService: PluginService) {
   }
 
   ngOnInit() {
@@ -64,15 +63,16 @@ export class PluginSettingsComponent implements OnInit {
         this.selectorService.getSelectedImagePathsSync()
       );
 
-    this.pluginService.executePlugin(this.pluginInfo.pluginName, pluginExecutionParams).subscribe(
-      response => {
-        if (response.ok) {
-          console.log('Plugin execution successful');
-        } else {
-          console.log('Plugin execution failed');
+    this.pluginService.executePlugin(this.pluginInfo.pluginName, pluginExecutionParams)
+      .subscribe(
+        response => {
+          if (response.status === 200) {
+            console.log('Plugin execution successful');
+          } else {
+            console.log('Plugin execution failed');
+          }
         }
-      }
-    );
+      );
   }
 
 }

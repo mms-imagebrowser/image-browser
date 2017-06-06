@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {Observable} from 'rxjs/Observable';
-import {Http, RequestOptions, Response, Headers} from '@angular/http';
+import {Http, RequestOptions, Response, Headers, Request, RequestMethod} from '@angular/http';
 import {PluginInfo} from '../../api/pluginInfo';
 import {PluginExecutionParams} from '../../api/pluginExecutionParams';
+import * as url from 'url';
 
 const host = 'http://localhost:3000';
 const pluginListRoute = '/api/plugins/';
@@ -60,15 +61,38 @@ export class PluginService {
   }
 
   executePlugin(pluginName: string,
-                pluginParams: PluginExecutionParams): Observable<Response> {
-    //const headers = new Headers({'Content-Type': 'application/json'});
-    // const options = new RequestOptions({headers: headers});
-
+                pluginParams: PluginExecutionParams) {
+    const headers = new Headers({'Content-Type': 'application/json'});
+    const options = new RequestOptions({headers: headers});
 
     return this.http.post(
       this.getPluginExecutionUrl(),
-      JSON.stringify(pluginParams)
-      );
+      JSON.stringify(pluginParams),
+      options
+    ).map((res: Response) => {
+      if (res) {
+        return {status: res.status, json: res.json()};
+      }
+    });
+
+
+    // const headers = new Headers();
+    // headers.append('Content-Type', 'application/json');
+    // headers.append('Accept', 'application/json');
+    //
+    // const requestoptions = new RequestOptions({
+    //   method: RequestMethod.Post,
+    //   url: this.getPluginExecutionUrl(),
+    //   headers: headers,
+    //   body: JSON.stringify(pluginParams)
+    // });
+    //
+    // return this.http.request(new Request(requestoptions))
+    //   .map((res: Response) => {
+    //     if (res) {
+    //       return {status: res.status, json: res.json()};
+    //     }
+    //   });
   }
 
   getSelectedPlugin(): ReplaySubject<PluginInfo> {
